@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest import main
 from clinic.controller import *
+from clinic.notes import Note
 
 class IntegrationTests(TestCase):
 
@@ -564,4 +565,4 @@ class IntegrationTests(TestCase):
 
 
 if __name__ == '__main__':
-	unittest.main()
+	main()
