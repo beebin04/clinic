@@ -22,8 +22,7 @@ class PatientRecord():
     def update_note(self, code: int, details: str):
         note = self.find_note(code)
         if note is not None:
-            note.text = details
-            return True
+            note.update(details)
         return False
     
     def delete_note(self, code: int):

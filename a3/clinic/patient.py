@@ -1,8 +1,6 @@
 from patient_record import PatientRecord
 from notes import Note
 class Patient():
-
-
     def __init__(self, 
                 phn: int = None,
                 n: str = None,
@@ -17,6 +15,7 @@ class Patient():
             self.email = e
             self.address = a
             self.patient_record = PatientRecord()
+            
     def __repr__(self):
         return "Patient(%d, %s, %s, %s, %s, %s)" % (self.phn, self.name, self.birth_date, self.phone, self.email, self.address)
     def __eq__(self, other):
