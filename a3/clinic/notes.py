@@ -17,4 +17,4 @@ class Note:
     
     def update(self, new_txt: str):
         self.text = new_txt
-    
+        

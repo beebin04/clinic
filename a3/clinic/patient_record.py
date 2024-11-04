@@ -31,3 +31,11 @@ class PatientRecord():
             self.note_list.remove(note)
             return True
         return False
+    def retrieve_note(self, text):
+        li = []
+        for note in self.note_list
+            if text in note:
+                li.append(note)
+                return li
+        return None
+

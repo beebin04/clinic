@@ -98,3 +98,15 @@ class Controller:
                 note = self.current_patient.patient_record.find_note(note_code)
                 return note
         return None
+    def retrieve_note(self, text):
+        if self.usrlogin:
+            if self.current_patient != None:
+                li = self.current_patient.patient_record.retrieve_note(text)
+                return li
+        return None
+    def delete_note(self, note_code):
+        if self.usrlogin:
+            if self.current_patient != None:
+                self.current_patient.patient_record.delete_note(note_code)
+                return True
+        return  None
