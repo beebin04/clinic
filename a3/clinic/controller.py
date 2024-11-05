@@ -4,19 +4,21 @@ class Controller:
         self.usrlogin = usrlogin
         self.current_patient = None
         self.patient_list =[]
+        
     def login(self, usr, pswd):
         if self.usrlogin == True:
             return False 
         if usr == "user" and pswd == "clinic2024":
             self.usrlogin = True
         return self.usrlogin
-    
+        
     def logout(self):
         if self.usrlogin:
             self.usrlogin = False
             return True
         else:
             return False
+            
     def create_patient(self, phn, n, b, p, e, a):
         if self.search_patient(phn) == None:
             if self.usrlogin:
@@ -27,12 +29,14 @@ class Controller:
                 return None
         else: 
             return None
+            
     def search_patient(self, phn):
         if self.usrlogin:
             for patient in self.patient_list:
                 if patient.phn == phn:
                     return patient
         return None
+        
     def retrieve_patients(self, name):
         if self.usrlogin:
             result = []
@@ -42,6 +46,7 @@ class Controller:
             return result
         else:
             return None
+            
     def update_patient(self, searchphn, phn, name, bd, phone, email, address):
         if self.usrlogin:
             if self.search_patient(phn) != None and searchphn != phn:
@@ -57,6 +62,7 @@ class Controller:
                 return True
         else:
             return False
+            
     def delete_patient(self, phn):
         if self.usrlogin is False:
             return False
@@ -66,6 +72,7 @@ class Controller:
             return True
         else:
             return False
+            
     def list_patients(self):
         if self.usrlogin:
             li = []
@@ -73,40 +80,54 @@ class Controller:
                 li.append(p)
             return li
         return None
+        
     def set_current_patient(self, phn):
         if self.usrlogin:
             p = self.search_patient(phn)
             if p is not None:
                 self.current_patient = p
         return None
+        
     def get_current_patient(self):
         if self.usrlogin:
             return self.current_patient
         return None
+        
     def unset_current_patient(self):
         self.current_patient = None
         return
+        
     def create_note(self, note_details=str):
         if self.usrlogin:
             if self.current_patient != None:
-                new_note = self.current_patient.patient_record.add_note(note_details)
+                new_note = self.current_patient.patient_record.create_note(note_details)
                 return new_note
         return None
+        
     def search_note(self, note_code):
         if self.usrlogin:
             if self.current_patient != None:
-                note = self.current_patient.patient_record.find_note(note_code)
+                note = self.current_patient.patient_record.search_note(note_code)
                 return note
         return None
-    def retrieve_note(self, text):
+        
+    def retrieve_notes(self, text):
         if self.usrlogin:
             if self.current_patient != None:
-                li = self.current_patient.patient_record.retrieve_note(text)
+                li = self.current_patient.patient_record.retrieve_notes(text)
                 return li
         return None
+        
     def delete_note(self, note_code):
         if self.usrlogin:
             if self.current_patient != None:
                 self.current_patient.patient_record.delete_note(note_code)
                 return True
         return  None
+        
+    def list_notes(self):
+        if self.usrlogin:
+            if self.current_patient != None:
+                li = self.current_patient.patient_record.list_notes()    
+                return li
+        return None

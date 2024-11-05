@@ -4,7 +4,7 @@ class PatientRecord():
         self.notecounter = 0
         self.note_list = []
 
-    def add_note(self, note_details: str = None):
+    def create_note(self, note_details: str = None):
         if note_details != None:
             self.notecounter += 1
             new_note = Note(self.notecounter, note_details)
@@ -12,13 +12,14 @@ class PatientRecord():
             return new_note
         return None
     
-    def find_note(self, notecode: int) -> Note:
+    def search_note(self, notecode: int) -> Note:
         if notecode > 0:
             for i in range(self.notecounter):
                 note = self.note_list[i]
                 if note.code == notecode:
                     return note
         return None
+        
     def update_note(self, code: int, details: str):
         note = self.find_note(code)
         if note is not None:
@@ -31,11 +32,17 @@ class PatientRecord():
             self.note_list.remove(note)
             return True
         return False
-    def retrieve_note(self, text):
+        
+    def retrieve_notes(self, text):
         li = []
         for note in self.note_list
             if text in note:
                 li.append(note)
                 return li
         return None
-
+        
+    def list_notes(self):
+        li = []
+        for p in self.note_list:
+            li.append(p)
+        return li
