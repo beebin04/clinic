@@ -19,8 +19,13 @@ class PatientTests(TestCase):
          expected_note = Note(1, "Patient comes with headache and high blood pressure.")
          self.assertIsNotNone(expected_note, "expected not cannot be null")
          patient = Patient(9790012000, "John Doe", "2000-10-10", "250 203 1010", "john.doe@gmail.com", "300 Moss St, Victoria")
-         note = patient.patient_record.add_note("Patient comes with headache and high blood pressure")
+         note = patient.create_note("Patient comes with headache and high blood pressure.")
          self.assertIsNotNone(note, "created note cannot be null")
          self.assertEqual(note, expected_note, "Notes should contain same data")
+    def test_find_note(self):
+        patient = Patient(9790012000, "John Doe", "2000-10-10", "250 203 1010", "john.doe@gmail.com", "300 Moss St, Victoria")
+        self.assertFalse(patient.search_note(1), "Cannot retrieve note from empty list")
+        patient.create_note("Patient comes with headache and high blood pressure.")
+        patient.create_note
 if __name__ == '__main__':
 	main()
