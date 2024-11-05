@@ -36,16 +36,19 @@ class Patient():
         return False
     
     def create_note(self, txt: str):
-        return self.patient_record.add_note(txt)
+        return self.patient_record.create_note(txt)
     
     def search_note(self, code: int):
-        return self.patient_record.find_note(code)
+        return self.patient_record.search_note(code)
     
     def update_note(self, code: int, text: str):
         return self.patient_record.update_note(code, text)
     
     def delete_note(self, code: int):
         return self.patient_record.delete_note(code)
-    
-    def retrieve_notes(self):
+        
+    def retrieve_notes(self, text):
+        return self.patient_record.retrieve_notes(text)
+        
+    def list_notes(self): 
         return self.patient_record.list_notes()

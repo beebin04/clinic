@@ -1,6 +1,5 @@
 from datetime import date
 class Note:
-    #dmdeakndlsk askd akmsd; almsd
     def __init__(self, code: int, text: str):
         self.code = code
         self.text = text
@@ -17,4 +16,4 @@ class Note:
     
     def update(self, new_txt: str):
         self.text = new_txt
-    
+        
