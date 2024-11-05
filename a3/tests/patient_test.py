@@ -2,7 +2,8 @@ from unittest import TestCase
 from unittest import main
 from clinic.patient import Patient
 from clinic.notes import Note
-class PatientTests(TestCase):
+
+class PatientTest(TestCase):
 
     def test_initialization(self):
         patient = Patient(9790012000, "John Doe", "2000-10-10", "250 203 1010", "john.doe@gmail.com", "300 Moss St, Victoria")
@@ -48,11 +49,11 @@ class PatientTests(TestCase):
         self.assertTrue(patient.delete_note(1), "Deleted note should return true")
     def test_list_notes(self):
         patient = Patient(9790012000, "John Doe", "2000-10-10", "250 203 1010", "john.doe@gmail.com", "300 Moss St, Victoria")
-        self.assertIsNone(patient.list_notes(), "Must be none, no notes in list")
+        self.assertEqual(len(patient.list_notes()), 0, "Must be 0, no notes in list")
         patient.create_note("Patient is missing big toe")
         patient.create_note("Patient suffering from hypothermia")
         patient.create_note("Patient has been plunged into a hot bath")
-        self.assertIsNotNone(patient.list_notes(), "Notes exist, list must not be empty")
+        self.assertEqual(len(patient.list_notes()), 3, "Notes exist, list must not be empty")
         
         n1 = Note(1, "Patient is missing big toe")
         n2 = Note(2, 'Patient suffering from hypothermia')
@@ -67,8 +68,8 @@ class PatientTests(TestCase):
         patient.create_note("Patient has been plunged into a hot bath")
         expected_list = []
         expected_list.append(Note(2, "Patient suffering from hypothermia"))
-        self.assertIsNone(patient.retrieve_notes("antibiotics"), "no notes exist in record with term antibiotics")
-        self.assertIsNotNone(patient.retrieve_notes("hypothermia"), "Should retrieve note 2, which is not none")
+        self.assertEqual(len(patient.retrieve_notes("antibiotics")), 0, "no notes exist in record with term antibiotics")
+        self.assertEqual(len(patient.retrieve_notes("hypothermia")), 1, "Should retrieve note 2, which is not none")
         self.assertEqual(expected_list, patient.retrieve_notes("hypothermia"), "lists should contain one note, with same codes and text")
         
 if __name__ == '__main__':

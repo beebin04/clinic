@@ -21,7 +21,7 @@ class PatientRecordTest(TestCase):
         expected_note = Note(3, "Patient admitted to ICU")
         p_record = PatientRecord()
         p_record2 = PatientRecord()
-        note = p_record.find_note(1)
+        note = p_record.search_note(1)
         self.assertIsNone(note, "Patient record is empty, should not return any notes")
         p_record.create_note("Patient comes with headaches and elevated blood pressure")
         p_record.create_note("Patient perscribed with antibiotics")
@@ -31,11 +31,11 @@ class PatientRecordTest(TestCase):
         p_record2.create_note("Patient headaches worsening, describes a progression towards migranes")
         p_record2.create_note("Patient admitted to ICU")
         
-        note = p_record.find_note(0)
+        note = p_record.search_note(0)
         self.assertIsNone(note, "Cannot retrieve note with code 0")
-        actual_note = p_record2.find_note(3)
+        actual_note = p_record2.search_note(3)
         self.assertEqual(actual_note, expected_note, "Notes should be equal")
-        actual_note = p_record2.find_note(1)
+        actual_note = p_record2.search_note(1)
         self.assertNotEqual(actual_note, expected_note, "Notes should not be equal")
         
     def test_update_note(self):
@@ -44,9 +44,9 @@ class PatientRecordTest(TestCase):
         p_record.create_note("Patient enters with high blood pressure")
         self.assertFalse(p_record.update_note(0, "Patient enters with BP of 120x80"), "Cannot update note with code of 0; notes do not have codes less than 1")
         expected_note = Note(1, "Patient enters with blood pressure of 120x80")
-        self.assertNotEqual(p_record.find_note(1), expected_note, "Notes should not be equal")
+        self.assertNotEqual(p_record.search_note(1), expected_note, "Notes should not be equal")
         p_record.update_note(1, "Patient enters with blood pressure of 120x80")
-        self.assertEqual(p_record.find_note(1), expected_note, "Notes should be equal after update")
+        self.assertEqual(p_record.search_note(1), expected_note, "Notes should be equal after update")
         
     def test_delete_note(self):
         p_record = PatientRecord()
@@ -59,7 +59,7 @@ class PatientRecordTest(TestCase):
         p_record.create_note("Patient admitted to ICU")
         self.assertFalse(p_record.delete_note(6), "Cannot delete note that is greater than length of record")
         self.assertTrue(p_record.delete_note(3), "Note at code 3 should be deleted and the function return true")
-        self.assertIsNone(p_record.find_note(3), "Note should not be retrievable after deletion")
+        self.assertIsNone(p_record.search_note(3), "Note should not be retrievable after deletion")
     
     def test_list_notes(self):
         p_record = PatientRecord()

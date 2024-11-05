@@ -149,7 +149,7 @@ class Controller:
     #lists all the notes in the current patient record from last to first
     def list_notes(self):
         if self.usrlogin:
+            li = []
             if self.current_patient != None:
                 li = self.current_patient.list_notes()   
                 return li
-        return None
