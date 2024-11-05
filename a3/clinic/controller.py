@@ -3,7 +3,7 @@ class Controller:
     #initialization  block
     def __init__(self, usrlogin=False):
         self.usrlogin = usrlogin
-        self.current_patient = None
+        self.current_patient : Patient = None
         self.patient_list =[]
     #login to the system with username and password  
     def login(self, usr, pswd):
@@ -111,7 +111,7 @@ class Controller:
     def create_note(self, note_details=str):
         if self.usrlogin:
             if self.current_patient != None:
-                new_note = self.current_patient.patient_record.create_note(note_details)
+                new_note = self.current_patient.create_note(note_details)
                 return new_note
         return None
     
@@ -119,7 +119,7 @@ class Controller:
     def search_note(self, note_code):
         if self.usrlogin:
             if self.current_patient != None:
-                note = self.current_patient.patient_record.search_note(note_code)
+                note = self.current_patient.search_note(note_code)
                 return note
         return None
     
@@ -127,27 +127,29 @@ class Controller:
     def retrieve_notes(self, text):
         if self.usrlogin:
             if self.current_patient != None:
-                li = self.current_patient.patient_record.retrieve_notes(text)
+                li = self.current_patient.retrieve_notes(text)
                 return li
         return None
     #updates the text body of a note
     def update_note(self, code: int, text: str):
         if self.usrlogin:
             if self.current_patient != None:
-                return self.current_patient.patient_record.update_note(code, text)
+                return self.current_patient.update_note(code, text)
             
     #selects a note by code in the current patient's record and deletes it
     def delete_note(self, note_code):
         if self.usrlogin:
             if self.current_patient != None:
-                self.current_patient.patient_record.delete_note(note_code)
-                return True
-        return  None
+                note = self.current_patient.search_note(note_code)
+                if note is not None:
+                    self.current_patient.delete_note(note_code)
+                    return True
+        return None
     
     #lists all the notes in the current patient record from last to first
     def list_notes(self):
         if self.usrlogin:
             if self.current_patient != None:
-                li = self.current_patient.patient_record.list_notes()    
+                li = self.current_patient.list_notes()   
                 return li
         return None
