@@ -3,7 +3,16 @@ class PatientRecord():
     def __init__(self):
         self.notecounter = 0
         self.note_list = []
-
+        
+    def __eq__(self, other):
+        if self.notecounter == other.notecounter:
+            i = 0
+            for note in self.note_list:
+                if note != other.note_list[i]:
+                    return False
+            return True
+        return False
+    
     def add_note(self, note_details: str = None):
         if note_details != None:
             self.notecounter += 1
@@ -19,6 +28,7 @@ class PatientRecord():
                 if note.code == notecode:
                     return note
         return None
+    
     def update_note(self, code: int, details: str):
         note = self.find_note(code)
         if note is not None:
@@ -29,5 +39,10 @@ class PatientRecord():
         note = self.find_note(code)
         if note is not None:
             self.note_list.remove(note)
+            self.notecounter -= 1
             return True
         return False
+    
+    def list_notes(self):
+        return self.note_list
+        

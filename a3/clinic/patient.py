@@ -1,5 +1,5 @@
-from patient_record import PatientRecord
-from notes import Note
+from .patient_record import PatientRecord
+from .notes import Note
 class Patient():
     def __init__(self, 
                 phn: int = None,
@@ -46,3 +46,6 @@ class Patient():
     
     def delete_note(self, code: int):
         return self.patient_record.delete_note(code)
+    
+    def retrieve_notes(self):
+        return self.patient_record.list_notes()
