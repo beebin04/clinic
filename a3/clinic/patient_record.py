@@ -1,9 +1,12 @@
 from .notes import Note
 class PatientRecord():
+
+    #initialization block
     def __init__(self):
         self.notecounter = 0
         self.note_list = []
-
+        
+    #creates a new note for the current patient's patient record, gives the note a code by incrementing a counter in patient record
     def create_note(self, note_details: str = None):
         if note_details != None:
             self.notecounter += 1
@@ -11,7 +14,8 @@ class PatientRecord():
             self.note_list.append(new_note)
             return new_note
         return None
-    
+        
+   #searches for a note by note code    
     def search_note(self, notecode: int) -> Note:
         if notecode > 0:
             for i in range(self.notecounter):
@@ -20,12 +24,14 @@ class PatientRecord():
                     return note
         return None
         
+   #updates the text body of a note        
     def update_note(self, code: int, details: str):
         note = self.find_note(code)
         if note is not None:
             note.update(details)
         return False
-    
+        
+    #selects a note by code and deletes it    
     def delete_note(self, code: int):
         note = self.find_note(code)
         if note is not None:
@@ -33,14 +39,18 @@ class PatientRecord():
             return True
         return False
         
+    #searches for all notes containing the given text and returns them as a list                    
     def retrieve_notes(self, text):
         li = []
-        for note in self.note_list
+        for note in self.note_list:
             if text in note:
                 li.append(note)
-                return li
-        return None
-        
+        if len(li) != 0:
+            return li
+        else:
+            return None
+            
+    #lists all the notes in the current patient record from last to first                    
     def list_notes(self):
         li = []
         for p in self.note_list:
