@@ -52,9 +52,11 @@ class PatientRecord():
     
     def list_notes(self):
         li = []
+        foundone = 0
         for n in self.note_list:
+            foundone = 1
             li.insert(0, n)
-        if len(li) > 0:
+        if foundone != 0:
             return li
         else:
             return None
@@ -62,10 +64,12 @@ class PatientRecord():
     #searches for all notes containing the given text and returns them as a list                    
     def retrieve_notes(self, text):
         li = []
+        foundone = 0
         for note in self.note_list:
             if text in note.text:
+                foundone = 1
                 li.append(note)
-        if len(li) != 0:
+        if foundone != 0:
             return li
         else:
             return None
