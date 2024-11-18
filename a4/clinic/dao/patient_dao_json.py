@@ -5,7 +5,7 @@ from .patient_encoder import PatientEncoder
 class PatientDAOJSON(PatientDAO):
     def __init__(self, autosave=False):
         self.autosave = autosave
-        self.filename = 'clinic/records/patients.json'
+        self.filename = 'clinic/patients.json'
         if self.autosave:
             try:
                 with open(self.filename, 'r') as file:

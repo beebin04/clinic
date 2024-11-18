@@ -8,14 +8,15 @@ class Patient:
                 b: str = None,
                 p: str = None,
                 e: str = None,
-                a: str = None):
+                a: str = None,
+                autosave=False):
         self.phn = phn
         self.name = n
         self.birth_date = b
         self.phone = p
         self.email = e
         self.address = a
-        self.patient_record = PatientRecord()
+        self.patient_record = PatientRecord(phn, autosave)
     #returns the representation of patient        
     def __repr__(self):
         return "Patient(%d, %s, %s, %s, %s, %s)" % (self.phn, self.name, self.birth_date, self.phone, self.email, self.address)

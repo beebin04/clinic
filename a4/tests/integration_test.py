@@ -329,7 +329,7 @@ class IntegrationTest(TestCase):
 		self.assertEqual(patients_list[2], expected_patient_3, "patient 3 is the third in the list of patients")
 		self.assertEqual(patients_list[3], expected_patient_4, "patient 4 is the fourth in the list of patients")
 		self.assertEqual(patients_list[4], expected_patient_5, "patient 5 is the fifth in the list of patients")
-		print(len(patients_list))
+		#print(len(patients_list))
 		# deleting some patients
 		self.controller.delete_patient(9790012000)
 		self.controller.delete_patient(9798884444)
@@ -729,12 +729,12 @@ class IntegrationTest(TestCase):
 		self.assertEqual(notes_list[2], expected_note_3, "note 3 is the third in the list of patients")
 		self.assertEqual(notes_list[3], expected_note_2, "note 2 is the fourth in the list of patients")
 		self.assertEqual(notes_list[4], expected_note_1, "note 1 is the fifth in the list of patients")
-
+		#print(notes_list)
+		#print("\n")
 		# deleting some notes
 		self.controller.delete_note(3)
 		self.controller.delete_note(1)
 		self.controller.delete_note(5)
-
 		# listing notes for a patient with deleted notes
 		notes_list = self.controller.list_notes()
 		self.assertEqual(len(notes_list), 2, "list of notes has size 2")
