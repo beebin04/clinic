@@ -18,7 +18,19 @@ class Note:
         
     #returns the string representation of the note
     def __str__(self):
-        return "Code: " + self.code + " Description: " + self.text + " Date: " + self.timestamp
+        return "Code: " + str(self.code) + " Description: " + self.text + " Date: " + str(self.timestamp)
+    def to_dict(self) -> dict:
+        return {
+            "__type__" : 'Note', 
+            "code" : self.code, 
+            "text" : self.text,
+            "timestamp" : self.timestamp
+            }
+    @classmethod
+    def from_dict(cls, data:dict):
+        if '__type__' in data and data['__type__'] == 'Note':
+            return cls(data["code"], data["text"])
+        
     
     #updates the text body of the note
     def update(self, new_txt: str):

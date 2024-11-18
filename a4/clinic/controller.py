@@ -44,7 +44,7 @@ class Controller:
             raise IllegalAccessException
         if self.search_patient(phn):
             raise IllegalOperationException
-        p = Patient(phn, n, b, p, e, a)
+        p = Patient(phn, n, b, p, e, a, self.autosave)
         self.patient_dao.create_patient(p)
         return p
 
@@ -72,7 +72,7 @@ class Controller:
         p = self.search_patient(phn)
         if p != None and searchphn != phn or self.search_patient(searchphn) is self.current_patient:
             raise IllegalOperationException
-        updated_patient = Patient(phn, name, bd, phone, email, address)
+        updated_patient = Patient(phn, name, bd, phone, email, address, self.autosave)
         p = updated_patient
         return self.patient_dao.update_patient(searchphn, updated_patient)
     
@@ -154,17 +154,17 @@ class Controller:
     #selects a note by code in the current patient's record and deletes it
     def delete_note(self, note_code):
         if self.usrlogin:
-            if self.current_patient != None:
+            if self.current_patient:
                 note = self.current_patient.search_note(note_code)
-                if note is not None:
-                    self.current_patient.delete_note(note_code)
+                if note:
+                    self.current_patient.delete_note(note.code)
                     return True
                 return False
             raise NoCurrentPatientException
         raise IllegalAccessException
     
     #lists all the notes in the current patient record from last to first
-    def list_notes(self):
+    def list_notes(self) -> list:
         if self.usrlogin:
             li = []
             if self.current_patient != None:
