@@ -1,14 +1,19 @@
 from .note_dao import NoteDAO
 from pickle import load, dump
 from clinic.note import Note
+import os
 class NoteDAOPickle(NoteDAO):
     
     def __init__(self, phn : int = None, autosave=False):
         self.autosave = autosave
         self.filename : str = f'clinic/records/{phn}.dat'
+
         self.notecounter = 0
         self.note_record = []
         if self.autosave:
+            directorypath = 'clinic/records'
+            if not os.path.exists(directorypath):
+                os.makedirs(directorypath)
             try:
                 with open(self.filename, 'rb') as file:
                     note_data = load(file)
