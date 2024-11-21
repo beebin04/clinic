@@ -31,7 +31,7 @@ class NoteDAOPickle(NoteDAO):
             for n in self.note_record:
                 if n.code == key:
                     return n
-    #creates a new not containing the input as text, and returns it (note gets assigned an auto incremented counter value)
+    #creates a new note containing the input as text, and returns it (note gets assigned an auto incremented counter value)
     def create_note(self, text):
         if text != None:
             self.notecounter += 1
