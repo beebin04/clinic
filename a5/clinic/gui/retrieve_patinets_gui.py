@@ -6,7 +6,7 @@ class RetrievePatientsWindow(QDialog):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller
-        
+        self.setWindowTitle("Retrieve Patient By Name")
         self.main_layout = QVBoxLayout(self)
         
         search_group = QGroupBox("Search")
@@ -26,13 +26,15 @@ class RetrievePatientsWindow(QDialog):
         self.main_layout.addWidget(search_group)
         self.setLayout(self.main_layout)
     def retrieve_patients(self):
-        
+        if hasattr(self, "table_view"):
+            self.main_layout.removeWidget(self.table_view)
+            self.table_view.deleteLater()
+            self.table_view = None
+        self.table_view = QTableView()
         patients = self.controller.retrieve_patients(self.search_name_field.text())
         li = []
         for pat in patients:
             li.append(pat.to_dict())
-        
-        self.table_view = QTableView()
         self.model = QStandardItemModel(len(li), 6)
         self.model.setHorizontalHeaderLabels(["PHN", "Name", "Birth Date", "Phone Num.", "Email", "Address"])
         for row, patient in enumerate(li): 
