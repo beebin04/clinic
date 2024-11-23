@@ -1,13 +1,14 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout
 from clinic.controller import Controller
+from .create_patient_gui import CreatePatientWindow
+from .search_patinet_gui import SearchPatientWindow
+from .retrieve_patinets_gui import RetrievePatientsWindow
 class MainMenuGui(QMainWindow):
     def __init__(self, parent_gui, controller):
         super().__init__()
         self.controller = controller
         self.parent_gui = parent_gui
-        self.parent_gui.hide()
-        
         self.setWindowTitle("Medical Clinic System")
         self.resize(300, 300)
         
@@ -41,11 +42,14 @@ class MainMenuGui(QMainWindow):
         central.setLayout(layout)
         self.setCentralWidget(central)
     def create_patient(self):
-        pass
+        patient_creator = CreatePatientWindow(self.controller)
+        patient_creator.exec()
     def search_patient(self):
-        pass
+        patient_search = SearchPatientWindow(self.controller)
+        patient_search.exec()
     def retrieve_patients(self):
-        pass
+        retrieve_patients = RetrievePatientsWindow(self.controller)
+        retrieve_patients.exec()
     def update_patient(self):
         pass
     def delete_patient(self):

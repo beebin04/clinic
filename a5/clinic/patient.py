@@ -38,7 +38,16 @@ class Patient:
                 return False
             return True
         return False
-    
+    def to_dict(self) -> dict:
+        return {
+            "__type__" : "Patient",
+            "phn" : self.phn,
+            "name" : self.name,
+            "birth_date" : self.birth_date,
+            "phone" : self.phone,
+            "email" : self.email,
+            "address" : self.address
+        }
     #creates a new note for the current patient's patient record, gives the note a code by incrementing a counter in patient record
     def create_note(self, txt: str):
         return self.patient_record.create_note(txt)
