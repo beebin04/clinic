@@ -4,6 +4,7 @@ from clinic.controller import Controller
 from .create_patient_gui import CreatePatientWindow
 from .search_patinet_gui import SearchPatientWindow
 from .retrieve_patinets_gui import RetrievePatientsWindow
+from .update_patient_gui import UpdatePatientWindow
 class MainMenuGui(QMainWindow):
     def __init__(self, parent_gui, controller):
         super().__init__()
@@ -51,7 +52,8 @@ class MainMenuGui(QMainWindow):
         retrieve_patients = RetrievePatientsWindow(self.controller)
         retrieve_patients.exec()
     def update_patient(self):
-        pass
+        update_patient = UpdatePatientWindow(self.controller)
+        update_patient.exec()
     def delete_patient(self):
         pass
     def list_patients(self):
