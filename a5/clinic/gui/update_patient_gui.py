@@ -56,9 +56,22 @@ class UpdatePatientWindow(QDialog):
         data_layout.addWidget(self.address_label, 1, 4)
         data_layout.addWidget(self.address_field, 1, 5)
         
+        self.update_button = QPushButton("Update")
+        self.update_button.setEnabled(False)
+        self.update_button.clicked.connect(self.update_patient)
+        data_layout.addWidget(self.update_button, 2, 0)
+        
         data_group.setLayout(data_layout)
         main_layout.addWidget(data_group)
         self.setLayout(main_layout)
+        
+        self.name_field.textChanged.connect(self.enable_update_button)
+        self.patient_phn_field.textChanged.connect(self.enable_update_button)
+        self.dob_field.textChanged.connect(self.enable_update_button)
+        self.phone_field.textChanged.connect(self.enable_update_button)
+        self.email_field.textChanged.connect(self.enable_update_button)
+        self.address_field.textChanged.connect(self.enable_update_button)
+        
     def search_patient(self):
         search_phn = self.search_phn_field.text().strip()
         if not search_phn.isdigit():
@@ -74,7 +87,25 @@ class UpdatePatientWindow(QDialog):
                 self.phone_field.setText(str(patient.phone))
                 self.email_field.setText(str(patient.email))
                 self.address_field.setText(str(patient.address))
+                self.update_button.setEnabled(False)
             else:
                 QMessageBox.warning(self, "Patient Not Found", f"Patient with PHN:{str(search_phn)} could not be found")
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Error finding patient: {str(e)}")
+    def enable_update_button(self):
+        self.update_button.setEnabled(True)
+    def update_patient(self):
+        try:
+            
+            phn = int(self.patient_phn_field.text())
+            name = str(self.name_field.text())
+            dob = str(self.dob_field.text())
+            phone = str(self.phone_field.text())
+            email = str(self.email_field.text())
+            address = str(self.address_field.text())
+            self.controller.update_patient(int(self.search_phn_field.text()), phn, name, dob, phone, email, address)
+            self.update_button.setEnabled(False)
+            QMessageBox.information(self, "Success", "Patient successfully updated")
+            
+        except Exception as e:
+            QMessageBox.warning(self, "Invalid Input", f"PHN {str(self.patient_phn_field.text())} is not a valid PHN format, please use integers only")

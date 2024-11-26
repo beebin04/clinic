@@ -5,6 +5,7 @@ from .create_patient_gui import CreatePatientWindow
 from .search_patinet_gui import SearchPatientWindow
 from .retrieve_patinets_gui import RetrievePatientsWindow
 from .update_patient_gui import UpdatePatientWindow
+from .delete_patient_gui import DeletePatientWindow
 class MainMenuGui(QMainWindow):
     def __init__(self, parent_gui, controller):
         super().__init__()
@@ -55,10 +56,15 @@ class MainMenuGui(QMainWindow):
         update_patient = UpdatePatientWindow(self.controller)
         update_patient.exec()
     def delete_patient(self):
-        pass
+        delete_patient = DeletePatientWindow(self.controller)
+        delete_patient.exec()
     def list_patients(self):
+        #list_patients = ListPatientsWindow(self.controller)
+        #list_patients.exec()
         pass
     def start_appt(self):
+        #start_appt = PatientAppointmentWindow(self.controller)
+        #start_appt.exec()
         pass
     def logout(self):
         self.controller.logout()
