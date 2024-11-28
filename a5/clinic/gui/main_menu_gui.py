@@ -1,71 +1,108 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout
+from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QGridLayout, QVBoxLayout, QHBoxLayout, QLineEdit, QWidget
 from clinic.controller import Controller
-from .create_patient_gui import CreatePatientWindow
-from .search_patinet_gui import SearchPatientWindow
-from .retrieve_patinets_gui import RetrievePatientsWindow
-from .update_patient_gui import UpdatePatientWindow
-from .delete_patient_gui import DeletePatientWindow
+from .create_patient_gui import CreatePatientWidget
+from .search_patinet_gui import SearchPatientWidget
+from .retrieve_patinets_gui import RetrievePatientsWidget
+from .update_patient_gui import UpdatePatientWidget
+from .delete_patient_gui import DeletePatientWidget
+from .list_patients_gui import ListPatientWidget
 class MainMenuGui(QMainWindow):
     def __init__(self, parent_gui, controller):
         super().__init__()
         self.controller = controller
         self.parent_gui = parent_gui
         self.setWindowTitle("Medical Clinic System")
-        self.resize(300, 300)
+        central_widget = QWidget()
+        main_layout = QGridLayout(central_widget)
         
-        self.add_patient_button = QPushButton("Add New Patient")
-        self.add_patient_button.clicked.connect(self.create_patient)
-        self.search_patient_button = QPushButton("Search Patient By PHN")
-        self.search_patient_button.clicked.connect(self.search_patient)
-        self.retrieve_patient_button = QPushButton("Retrieve Patients By Name")        
-        self.retrieve_patient_button.clicked.connect(self.retrieve_patients)
-        self.update_patient_button = QPushButton("Update Patient Data")
-        self.update_patient_button.clicked.connect(self.update_patient)
-        self.delete_patient_button = QPushButton("Delete A Patient")
-        self.delete_patient_button.clicked.connect(self.delete_patient)
-        self.list_patients_button = QPushButton("List All Patients")
-        self.list_patients_button.clicked.connect(self.list_patients)
-        self.start_appointment_button = QPushButton("Begin An Appointment")
-        self.start_appointment_button.clicked.connect(self.start_appt)
+        #Patient options and operations section
+        options_layout = QVBoxLayout()
+        self.add_button = QPushButton("Add Patient")
+        options_layout.addWidget(self.add_button)
+        self.search_button = QPushButton("Search Patient")
+        options_layout.addWidget(self.search_button)
+        self.update_button = QPushButton("Update Patient")
+        options_layout.addWidget(self.update_button)
+        self.delete_button = QPushButton("Delete Patient")
+        options_layout.addWidget(self.delete_button)
+        self.retrieve_button = QPushButton("Retrieve Patients")
+        options_layout.addWidget(self.retrieve_button)
+        self.appt_button = QPushButton("Start Appointment")
+        options_layout.addWidget(self.appt_button)
+        
+        
         
         self.logout_button = QPushButton("Logout")
         self.logout_button.clicked.connect(self.logout)
-        layout = QVBoxLayout()
-        layout.addWidget(self.add_patient_button)
-        layout.addWidget(self.search_patient_button)
-        layout.addWidget(self.retrieve_patient_button)
-        layout.addWidget(self.update_patient_button)
-        layout.addWidget(self.delete_patient_button)
-        layout.addWidget(self.list_patients_button)
-        layout.addWidget(self.start_appointment_button)
-        layout.addWidget(self.logout_button)
-        central = QWidget()
-        central.setLayout(layout)
-        self.setCentralWidget(central)
+        options_layout.addWidget(self.logout_button)
+        
+        options_widget = QWidget()
+        options_widget.setLayout(options_layout)
+        
+        main_layout.addWidget(options_widget, 1, 0)
+        
+        #data section (current patient, num patients)
+        data_layout = QHBoxLayout()
+        data_widget = QWidget()
+        self.current_patient_label = QLabel("Selected Patient:")
+        self.current_patient_field = QLabel("")
+        
+        self.num_patients_label = QLabel("Number of Patients in System:")
+        self.num_patients_field = QLabel("")
+        
+        data_layout.addWidget(self.num_patients_label, 0)
+        data_layout.addWidget(self.num_patients_field, 1)        
+        data_layout.addWidget(self.current_patient_label, 2)
+        data_layout.addWidget(self.current_patient_field, 3)
+
+        data_widget.setLayout(data_layout)
+        
+        main_layout.addWidget(data_widget, 0, 0, 1, 0)
+        self.update_button.clicked.connect(self.update_patient)
+        self.search_button.clicked.connect(self.search_patient)
+        self.add_button.clicked.connect(self.create_patient)
+        self.delete_button.clicked.connect(self.delete_patient)
+        self.retrieve_button.clicked.connect(self.retrieve_patients)
+        
+        self.patients_window = ListPatientWidget(self.controller)
+        self.patients_window.patient_selected.connect(self.update_current_patient)
+        main_layout.addWidget(self.patients_window, 1, 1)
+        
+        self.update_patient_count(self.patients_window.get_num_patients())
+        central_widget.setLayout(main_layout)
+        self.setCentralWidget(central_widget)
+        self.resize(875, 300)
+        
     def create_patient(self):
-        patient_creator = CreatePatientWindow(self.controller)
-        patient_creator.exec()
+        patient_creator = CreatePatientWidget(self.controller)
+        if patient_creator.exec():
+            self.patients_window.load_patients()
+            self.update_patient_count(self.patients_window.get_num_patients())
     def search_patient(self):
-        patient_search = SearchPatientWindow(self.controller)
+        patient_search = SearchPatientWidget(self.controller)
         patient_search.exec()
     def retrieve_patients(self):
-        retrieve_patients = RetrievePatientsWindow(self.controller)
+        retrieve_patients = RetrievePatientsWidget(self.controller)
         retrieve_patients.exec()
     def update_patient(self):
-        update_patient = UpdatePatientWindow(self.controller)
-        update_patient.exec()
+        update_patient = UpdatePatientWidget(self, self.controller)
+        if update_patient.exec():
+            self.patients_window.load_patients()
     def delete_patient(self):
-        delete_patient = DeletePatientWindow(self.controller)
-        delete_patient.exec()
-    def list_patients(self):
-        #list_patients = ListPatientsWindow(self.controller)
-        #list_patients.exec()
-        pass
+        delete_patient = DeletePatientWidget(self, self.controller)
+        if delete_patient.exec():
+            self.patients_window.load_patients()
+            self.update_patient_count(self.patients_window.get_num_patients())
     def start_appt(self):
-        #start_appt = PatientAppointmentWindow(self.controller)
+        #start_appt = PatientAppointmentWindow(self, self.controller)
         #start_appt.exec()
         pass
+    def update_current_patient(self, patient):
+        self.current_patient_field.setText(patient["phn"])
+        self.controller.set_current_patient(int(patient["phn"]))
+    def update_patient_count(self, count): 
+        self.num_patients_field.setText(str(count))
     def logout(self):
         self.controller.logout()
         self.hide()

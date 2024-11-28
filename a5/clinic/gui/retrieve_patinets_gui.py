@@ -1,8 +1,8 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QWidget
-from PyQt6.QtWidgets import QLineEdit, QPushButton, QTableView, QDialog
+from PyQt6.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox, QLabel, QDialog
+from PyQt6.QtWidgets import QLineEdit, QPushButton, QTableView
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
-class RetrievePatientsWindow(QDialog):
+class RetrievePatientsWidget(QDialog):
     def __init__(self, controller):
         super().__init__()
         self.controller = controller

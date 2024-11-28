@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QDialog, QFormLayout, QLineEdit, QPushButton, QMessageBox
-class CreatePatientWindow(QDialog):
+class CreatePatientWidget(QDialog):
     def __init__(self,  controller):
         super().__init__()
         self.controller = controller

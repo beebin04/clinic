@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton, QMessageBox
 from PyQt6.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout
-class SearchPatientWindow(QDialog):
+class SearchPatientWidget(QDialog):
     def __init__(self, controller):
         super().__init__()
         self.setWindowTitle("Search Patient")
@@ -29,34 +29,22 @@ class SearchPatientWindow(QDialog):
         details_layout = QGridLayout() 
         
         self.label_patient_phn = QLabel("PHN:") 
-        self.phn_field = QLineEdit(self) 
-        self.phn_field.setEnabled(False)
-        self.phn_field.setStyleSheet("background: transparent; border: none;")
+        self.phn_field = QLabel("")
          
         self.label_patient_name = QLabel("Name:") 
-        self.name_field = QLineEdit(self) 
-        self.name_field.setEnabled(False) 
-        self.name_field.setStyleSheet("background: transparent; border: none;")
+        self.name_field = QLabel("") 
         
         self.label_patient_birth_day = QLabel("Birth Date (YYYY-MM-DD):") 
-        self.bd_field = QLineEdit(self) 
-        self.bd_field.setEnabled(False)
-        self.bd_field.setStyleSheet("background: transparent; border: none;") 
+        self.bd_field = QLabel("")
         
         self.label_patient_phone = QLabel("Phone Number:") 
-        self.phone_field = QLineEdit(self) 
-        self.phone_field.setEnabled(False) 
-        self.phone_field.setStyleSheet("background: transparent; border: none;")
+        self.phone_field = QLabel("")
         
         self.label_patient_email = QLabel("Email Address:") 
-        self.email_field = QLineEdit(self) 
-        self.email_field.setEnabled(False) 
-        self.email_field.setStyleSheet("background: transparent; border: none;")
+        self.email_field = QLabel("")
         
         self.label_patient_address = QLabel("Address:") 
-        self.address_field = QLineEdit(self) 
-        self.address_field.setEnabled(False) 
-        self.address_field.setStyleSheet("background: transparent; border: none;")
+        self.address_field = QLabel("")
         
         for field in [self.phn_field, self.name_field, self.bd_field, self.phone_field, self.email_field, self.address_field]: 
             field.setMinimumWidth(200)

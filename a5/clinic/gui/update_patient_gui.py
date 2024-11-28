@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QDialog, QVBoxLayout, QGroupBox, QBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QGridLayout
-class UpdatePatientWindow(QDialog):
-    def __init__(self, controller):
+class UpdatePatientWidget(QDialog):
+    def __init__(self, main_window, controller):
         super().__init__()
         self.controller = controller
         self.setWindowTitle("Update Patient")
@@ -72,6 +72,17 @@ class UpdatePatientWindow(QDialog):
         self.email_field.textChanged.connect(self.enable_update_button)
         self.address_field.textChanged.connect(self.enable_update_button)
         
+        if main_window.current_patient_field.text() != "":
+            patient = self.controller.search_patient(int(main_window.current_patient_field.text()))
+            self.search_phn_field.setText(str(patient.phn))
+            self.name_field.setText(patient.name)
+            self.patient_phn_field.setText(str(patient.phn))
+            self.dob_field.setText(patient.birth_date)
+            self.phone_field.setText(patient.phone)
+            self.email_field.setText(patient.email)
+            self.address_field.setText(patient.address)
+            
+        
     def search_patient(self):
         search_phn = self.search_phn_field.text().strip()
         if not search_phn.isdigit():
@@ -103,9 +114,11 @@ class UpdatePatientWindow(QDialog):
             phone = str(self.phone_field.text())
             email = str(self.email_field.text())
             address = str(self.address_field.text())
+            self.controller.unset_current_patient()
             self.controller.update_patient(int(self.search_phn_field.text()), phn, name, dob, phone, email, address)
             self.update_button.setEnabled(False)
             QMessageBox.information(self, "Success", "Patient successfully updated")
+            self.accept()
             
         except Exception as e:
             QMessageBox.warning(self, "Invalid Input", f"PHN {str(self.patient_phn_field.text())} is not a valid PHN format, please use integers only")
