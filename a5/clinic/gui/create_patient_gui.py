@@ -25,7 +25,7 @@ class CreatePatientWidget(QDialog):
         add_button.clicked.connect(self.add_patient)
 
         layout.addWidget(add_button)
-
+        self.resize(300, 150)
         self.setLayout(layout)
     def add_patient(self):
         try:
