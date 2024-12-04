@@ -1,0 +1,47 @@
+[
+    {
+        "__type__": "Patient",
+        "phn": 9792225555,
+        "name": "Joe Hancock",
+        "birth_date": "1990-01-18",
+        "phone": "278 456 7840",
+        "email": "john.hancock@outlook.com",
+        "address": "5000 Douglas St, Saanich"
+    },
+    {
+        "__type__": "Patient",
+        "phn": 9790012000,
+        "name": "John Doe",
+        "birth_date": "2000-10-12",
+        "phone": "250 203 1010",
+        "email": "john.doe@gmail.com",
+        "address": "300 Moss St, Victoria"
+    },
+    {
+        "__type__": "Patient",
+        "phn": 9790014444,
+        "name": "Mary Doe",
+        "birth_date": "1995-07-08",
+        "phone": "250 203 2020",
+        "email": "mary.doe@gmail.com",
+        "address": "300 Moss St, Victoria"
+    },
+    {
+        "__type__": "Patient",
+        "phn": 9798884444,
+        "name": "Ali Mesbah",
+        "birth_date": "1975-03-03",
+        "phone": "250 301 6060",
+        "email": "mesbah.ali@gmail.com",
+        "address": "500 Fairfield Rd, Victoria"
+    },
+    {
+        "__type__": "Patient",
+        "phn": 9792226666,
+        "name": "Jin Hu",
+        "birth_date": "2002-02-28",
+        "phone": "278 222 4545",
+        "email": "jinhu@outlook.com",
+        "address": "200 Admirals Rd, Esquimalt"
+    }
+]

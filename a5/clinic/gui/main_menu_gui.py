@@ -1,12 +1,13 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QGridLayout, QVBoxLayout, QHBoxLayout, QLineEdit, QWidget
+from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QGridLayout, QVBoxLayout, QHBoxLayout, QWidget, QMessageBox
 from clinic.controller import Controller
 from .create_patient_gui import CreatePatientWidget
-from .search_patinet_gui import SearchPatientWidget
-from .retrieve_patinets_gui import RetrievePatientsWidget
+from .search_patient_gui import SearchPatientWidget
+from .retrieve_patients_gui import RetrievePatientsWidget
 from .update_patient_gui import UpdatePatientWidget
 from .delete_patient_gui import DeletePatientWidget
 from .list_patients_gui import ListPatientWidget
+from .appointment_gui import AppointmentWindow
 class MainMenuGui(QMainWindow):
     def __init__(self, parent_gui, controller):
         super().__init__()
@@ -64,6 +65,7 @@ class MainMenuGui(QMainWindow):
         self.add_button.clicked.connect(self.create_patient)
         self.delete_button.clicked.connect(self.delete_patient)
         self.retrieve_button.clicked.connect(self.retrieve_patients)
+        self.appt_button.clicked.connect(self.start_appt)
         
         self.patients_window = ListPatientWidget(self.controller)
         self.patients_window.patient_selected.connect(self.update_current_patient)
@@ -95,9 +97,10 @@ class MainMenuGui(QMainWindow):
             self.patients_window.load_patients()
             self.update_patient_count(self.patients_window.get_num_patients())
     def start_appt(self):
-        #start_appt = PatientAppointmentWindow(self, self.controller)
-        #start_appt.exec()
-        pass
+        if not self.controller.current_patient:
+            QMessageBox.critical(self, "Error", "No Patient Currently Selected")
+        start_appt = AppointmentWindow(self, self.controller)
+        start_appt.exec()
     def update_current_patient(self, patient):
         self.current_patient_field.setText(patient["phn"])
         self.controller.set_current_patient(int(patient["phn"]))

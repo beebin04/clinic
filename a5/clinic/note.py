@@ -1,10 +1,10 @@
 from datetime import date
 class Note:
     #initialization block
-    def __init__(self, code: int, text: str):
+    def __init__(self, code: int, text: str, timestamp=date.today()):
         self.code = code
         self.text = text
-        self.timestamp = date.today()
+        self.timestamp = timestamp
         
     #equals operator    
     def __eq__(self, other):
@@ -29,7 +29,7 @@ class Note:
     @classmethod
     def from_dict(cls, data:dict):
         if '__type__' in data and data['__type__'] == 'Note':
-            return cls(data["code"], data["text"])
+            return cls(data["code"], data["text"], data["timestamp"])
         
     
     #updates the text body of the note
