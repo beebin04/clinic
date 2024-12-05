@@ -6,6 +6,7 @@ from .create_note_gui import CreateNoteWidget
 from .search_note_gui import SearchNoteWidget
 from .update_note_gui import UpdateNoteWidget
 from .delete_note_gui import DeleteNoteWidget
+from .retrieve_notes_gui import RetrieveNotesWidget
 
 class AppointmentWindow(QDialog):
     def __init__(self, main_window, controller):
@@ -64,7 +65,7 @@ class AppointmentWindow(QDialog):
         self.update_note_count(self.notes_list.get_num_notes())
         self.setLayout(main_layout)
         self.resize(535, 150)
-        
+          
     def create_note(self):
         note_creator = CreateNoteWidget(self.controller)
         if note_creator.exec():
@@ -84,7 +85,8 @@ class AppointmentWindow(QDialog):
             self.notes_list.load_notes()
             self.update_note_count(self.notes_list.get_num_notes())
     def retrieve_notes(self):
-        pass
+        note_retrieve = RetrieveNotesWidget(self.controller)
+        note_retrieve.exec()
     def exit(self):
         self.close()
     def update_note_count(self, count):
