@@ -5,6 +5,8 @@ from PyQt6.QtWidgets import QLabel, QLineEdit, QGridLayout, QPushButton
 from clinic.controller import Controller
 from .main_menu_gui import MainMenuGui
 from clinic.exception import *
+from clinic.exception.invalid_login_exception import InvalidLoginException
+
 class ClinicGUI(QMainWindow):
 
     def __init__(self):
