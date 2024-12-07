@@ -19,15 +19,6 @@
     },
     {
         "__type__": "Patient",
-        "phn": 9790014444,
-        "name": "Mary Doe",
-        "birth_date": "1995-07-08",
-        "phone": "250 203 2020",
-        "email": "mary.doe@gmail.com",
-        "address": "300 Moss St, Victoria"
-    },
-    {
-        "__type__": "Patient",
         "phn": 9798884444,
         "name": "Ali Mesbah",
         "birth_date": "1975-03-03",

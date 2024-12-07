@@ -1,5 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QDialog, QGridLayout, QLabel, QLineEdit, QPushButton, QMessageBox
+from clinic.exception.illegal_operation_exception import IllegalOperationException
 class DeletePatientWidget(QDialog):
     def __init__(self, main_window, controller):
         super().__init__()
@@ -31,4 +32,11 @@ class DeletePatientWidget(QDialog):
             else:
                 QMessageBox.warning(self, "Error", f"Patient with PHN:{phn} not found")
         except ValueError as e:
-            QMessageBox.warning(self, "Invalid Input", f"PHN {phn} not in valid format; please use integers")
+            QMessageBox.warning(self, "Invalid Input", f"PHN not in valid format; please use integers")
+        except IllegalOperationException:
+            failedDialog = QMessageBox(self)
+            failedDialog.setIcon(QMessageBox.Icon.Critical)
+            failedDialog.setWindowTitle("Delete Failed")
+            failedDialog.setText("This PHN has no associated patient")
+            failedDialog.setStandardButtons(QMessageBox.StandardButton.Ok)
+            failedDialog.exec()

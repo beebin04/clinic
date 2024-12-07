@@ -39,4 +39,4 @@ class CreatePatientWidget(QDialog):
             QMessageBox.information(self, "Success", "Patient added to system")
             self.accept()
         except Exception as e:
-            QMessageBox.warning(self, "Error", f"Error adding patient: {str(e)}")
+            QMessageBox.warning(self, "Error", f"Error adding patient")

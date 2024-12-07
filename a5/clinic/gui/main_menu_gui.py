@@ -99,8 +99,9 @@ class MainMenuGui(QMainWindow):
     def start_appt(self):
         if not self.controller.current_patient:
             QMessageBox.critical(self, "Error", "No Patient Currently Selected")
-        start_appt = AppointmentWindow(self, self.controller)
-        start_appt.exec()
+        else:
+            start_appt = AppointmentWindow(self, self.controller)
+            start_appt.exec()
     def update_current_patient(self, patient):
         self.current_patient_field.setText(patient["phn"])
         self.controller.set_current_patient(int(patient["phn"]))

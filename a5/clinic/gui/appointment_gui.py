@@ -22,6 +22,7 @@ class AppointmentWindow(QDialog):
         self.num_notes = QLabel("")
         self.selected_note_label = QLabel("Selected Note:")
         self.selected_note = QLabel("")
+        
         data_layout.addWidget(self.label)
         data_layout.addWidget(self.patient)
         data_layout.addWidget(self.num_notes_label)
